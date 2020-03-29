@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Epidemic simulator - Luca Dibattista</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="./plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png"
+    href="./images/iconfinder_virus-cell-life-biology-Microorganism_5859167.svg" />
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    .footer {
+      background-color: #f5f5f5;
+    }
+  </style>
+  <!-- Custom styles for this template -->
+  <script src="https://unpkg.com/konva@4.2.2/konva.min.js"></script>
+  <script src="./plugins/chartjs/dist/Chart.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="https://lucadibattista.it">Luca Dibattista</a>
+  </nav>
+
+  <main role="main" class="container">
+    <div id="simulator">
+      <div class="row">
+        <h1>Epidemic simulator</h1>
+      </div>
+      <div class="row">
+        <div class="alert alert-info col-sm-3" role="alert">
+          <span id="total_people"></span> total people<br>
+        </div>
+        <div class="alert alert-danger col-sm-3" role="alert">
+          <span id="total_infected"></span> infected<br>
+        </div>
+        <div class="alert alert-success col-sm-3" role="alert">
+          <span id="total_immune"></span> cured<br>
+        </div>
+        <div class="alert alert-dark col-sm-3" role="alert">
+          <span id="total_dead"></span> dead<br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div id="stage_container" style="border: #000 1px solid; min-height: 500px;"></div>
+        </div>
+        <div class="col-sm-6">
+          <canvas id="chart" width="400" height="400">Your browser is not compatible</canvas>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h3>Simulation parameters</h3>
+    </div>
+    <div class="row mb-5">
+      <form class="col-sm-12">
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label for="control_initial_population">Initial population</label>
+            <input type="number" id="control_initial_population" class="form-control"
+              aria-describedby="control_initial_population_help">
+            <small id="control_initial_population_help" class="form-text text-muted">
+              Number of total people
+            </small>
+          </div>
+          <div class="col-sm-4">
+            <label for="control_initial_infected">Initial infected</label>
+            <input type="number" id="control_initial_infected" class="form-control"
+              aria-describedby="control_initial_infected_help">
+            <small id="control_initial_infected_help" class="form-text text-muted">
+              Number of initial people infected
+            </small>
+          </div>
+          <div class="col-sm-4">
+            <label for="control_people_speed">People speed</label>
+            <input type="range" id="control_people_speed" class="form-control"
+              aria-describedby="control_people_speed_help">
+            <small id="control_people_speed_help" class="form-text text-muted">
+              Speed with which people move
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label for="control_desease_duration">Desease duration</label>
+            <input type="number" id="control_desease_duration" class="form-control"
+              aria-describedby="control_desease_duration_help">
+            <small id="control_desease_duration_help" class="form-text text-muted">
+              How many days before dying or healing
+            </small>
+          </div>
+          <div class="col-sm-4">
+            <label for="control_infection_rate">Infection rate: <span id="control_infection_rate_text"></span>%</label>
+            <input type="range" id="control_infection_rate" class="form-control"
+              aria-describedby="control_infection_rate_help">
+            <small id="control_infection_rate_help" class="form-text text-muted">
+              The probability for an infected to infect another person in the nearby
+            </small>
+          </div>
+          <div class="col-sm-4">
+            <label for="control_lethality_rate">Lethality: <span id="control_lethality_rate_text"></span>%</label>
+            <input type="range" id="control_lethality_rate" class="form-control"
+              aria-describedby="control_lethality_rate_help">
+            <small id="control_lethality_rate_help" class="form-text text-muted">
+              The probability for an infected to die
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="control_quarantine" disabled>
+              <label class="custom-control-label" for="control_quarantine">Activate quarantine (coming soon...)</label>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <label for="control_desease_duration">Days before quarantine</label>
+            <input type="number" id="control_days_to_quarantine" class="form-control"
+              aria-describedby="control_desease_duration_help" disabled>
+            <small id="control_desease_duration_help" class="form-text text-muted">
+              How many days before showing symphtoms and going in quarantine
+            </small>
+          </div>
+          <div class="col-sm-4">
+            <label for="control_asymptomatic_rate">Asymptomatic rate: <span
+                id="control_asymptomatic_rate_text"></span>%</label>
+            <input type="range" id="control_asymptomatic_rate" class="form-control"
+              aria-describedby="control_asymptomatic_rate_help" disabled>
+            <small id="control_asymptomatic_rate_help" class="form-text text-muted">
+              How many, among people who get the virus, don't go in quarantine (maybe for not showing symphtoms)
+            </small>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary" id="control_stop">Stop simulation</button>
+        <button type="button" class="btn btn-primary" id="control_start">Start simulation</button>
+      </form>
+    </div>
+
+  </main>
+
+  <footer class="footer mt-auto py-3">
+    <div class="container">
+      <span class="text-muted">
+        Powered by <a href="https://lucadibattista.it">Luca Dibattista</a>.<br>
+        Code is <a href="https://github.com/LucaDiba/epidemic-simulator" target="_blank">available on GitHub</a> under
+        the <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License v3.0</a>
+        license.
+      </span>
+    </div>
+  </footer>
+
+  <script src="./plugins/bootstrap/js/jquery-3.4.1.slim.min.js"></script>
+  <script src="./plugins/epidemic/header.js"></script>
+  <script src="./plugins/epidemic/index.js"></script>
+  <script src="./plugins/epidemic/listeners.js"></script>
+  <script src="./plugins/epidemic/chart.js"></script>
+
+</html>
