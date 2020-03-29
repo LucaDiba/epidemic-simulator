@@ -1,14 +1,35 @@
-maxVelocity = 1.0;
+var COLORS = {
+    circles: {
+        healthy: {
+            fill: '#FFFFFF',
+            stroke: '#808080',
+        },
+        infected: {
+            fill: '#FF0000',
+            stroke: '#FF0000',
+        },
+        immune: {
+            fill: '#00FFE7',
+            stroke: '005eff',
+        },
+        dead: {
+            fill: '#000000',
+            stroke: '#000000',
+        }
+    },
+}
+
+maxVelocity = 2.0;
 initialPopulation = 600;
 initialInfected = 10;
 
 infectionRate = 0.1;
-daysBeforeSymphtoms = 5;
 infectionDuration = 14;
 lethalityRate = 0.02;
-asymptomaticRate = 0.1;
 
 quarantineActivated = true;
+daysBeforeSymphtoms = 5;
+asymptomaticRate = 0.1;
 
 var lineGraph;
 

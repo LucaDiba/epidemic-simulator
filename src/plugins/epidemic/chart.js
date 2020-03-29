@@ -1,4 +1,4 @@
-
+var updateChartInterval;
 var elapsedDays = 0;
 var config = {
     type: 'line',
@@ -6,29 +6,29 @@ var config = {
         labels: [],
         datasets: [{
             label: 'Infected',
-            backgroundColor: 'red',
-            borderColor: 'black',
+            backgroundColor: COLORS.circles.infected.fill,
+            borderColor: COLORS.circles.infected.stroke,
             data: [],
             fill: 'origin',
         }, {
             label: 'Healthy',
             fill: 'end',
-            backgroundColor: 'white',
-            borderColor: 'black',
+            backgroundColor: COLORS.circles.healthy.fill,
+            borderColor: COLORS.circles.healthy.stroke,
             data: [],
             fill: '-1',
         }, {
             label: 'Cured',
             fill: 'end',
-            backgroundColor: 'green',
-            borderColor: 'black',
+            backgroundColor: COLORS.circles.immune.fill,
+            borderColor: COLORS.circles.immune.stroke,
             data: [],
             fill: '-1',
         }, {
-            label: 'Death',
+            label: 'Dead',
             fill: 'end',
-            backgroundColor: 'black',
-            borderColor: 'black',
+            backgroundColor: COLORS.circles.dead.fill,
+            borderColor: COLORS.circles.dead.stroke,
             data: [],
             fill: '-1',
         }]
@@ -66,24 +66,6 @@ var config = {
     }
 };
 
-var updateChartInterval;
-function updateChart() {
-    let total_people = statistics.totalPeople;
-    let total_infected = statistics.currentInfected;
-    let total_cured = statistics.currentCured;
-    let total_dead = statistics.currentDead;
-
-    config.data.labels.push(elapsedDays++);
-    config.data.datasets[0].data.push(total_infected);
-    config.data.datasets[1].data.push(total_people - total_infected - total_cured - total_dead);
-    config.data.datasets[2].data.push(total_cured);
-    config.data.datasets[3].data.push(total_dead);
-    lineGraph.update();
-
-    if (total_infected === 0) {
-        clearInterval(updateChartInterval);
-    }
-}
 
 window.onload = function () {
     var ctx = document.getElementById('chart').getContext('2d');
@@ -101,4 +83,23 @@ function resetChart() {
         clearInterval(updateChartInterval);
     }
     updateChart();
+}
+
+function pushData(total_people, total_infected, total_cured, total_dead) {
+    config.data.labels.push(elapsedDays++);
+    config.data.datasets[0].data.push(total_infected);
+    config.data.datasets[1].data.push(total_people - total_infected - total_cured - total_dead);
+    config.data.datasets[2].data.push(total_cured);
+    config.data.datasets[3].data.push(total_dead);
+    lineGraph.update();
+}
+
+function updateChart() {
+    let total_infected = statistics.currentInfected;
+
+    pushData(statistics.totalPeople, total_infected, statistics.currentCured, statistics.currentDead);
+
+    if (total_infected === 0) {
+        clearInterval(updateChartInterval);
+    }
 }

@@ -6,11 +6,12 @@ var layer;
 var requestAnimationFrameCall;
 
 class Person {
-    constructor(){
+    constructor() {
         this._id = person_ID++;
         this.circle = new Konva.Circle({
             radius: 5,
-            fill: 'black',
+            fill: COLORS.circles.healthy.fill,
+            stroke: COLORS.circles.healthy.stroke,
             x: Math.random() * maxX,
             y: Math.random() * maxY,
         });
@@ -24,22 +25,23 @@ class Person {
         this.peopleInRadius = [];
     }
 
-	getId = function() {
-		return _id;
-	}
-	getPopulation = function() {
-		return this.population;
-	}
-    
-    setPopulation = function(pop) {
-		this.population = pop;
+    getId = function () {
+        return _id;
+    }
+    getPopulation = function () {
+        return this.population;
     }
 
-    infect = function() {
-        if(this.infected == false && this.immune == false){
+    setPopulation = function (pop) {
+        this.population = pop;
+    }
+
+    infect = function () {
+        if (this.infected == false && this.immune == false) {
             this.infected = true;
             this.infectedTimestamp = Date.now();
-            this.circle.fill('red');
+            this.circle.fill(COLORS.circles.infected.fill);
+            this.circle.stroke(COLORS.circles.infected.stroke);
             this.population.infectedPeople.push(this);
 
             // Update statistics
@@ -47,19 +49,20 @@ class Person {
         }
     }
 
-    immunize = function() {
+    immunize = function () {
         this.immune = true;
         this.infected = false;
-        this.circle.fill('green');
+        this.circle.fill(COLORS.circles.immune.fill);
+        this.circle.stroke(COLORS.circles.immune.stroke);
 
         // Remove from infected array
         let index = this.population.infectedPeople.indexOf(this);
         this.population.infectedPeople.splice(index, 1);
 
         // Add to immune array or kill
-        if(Math.random() < lethalityRate) {
+        if (Math.random() < lethalityRate) {
             this.population.deadPeople.push(this);
-            this.circle.destroy();
+            this.moveToDeadStage();
         } else {
             this.population.immunePeople.push(this);
         }
@@ -69,41 +72,86 @@ class Person {
         statistics.currentCured = this.population.immunePeople.length;
         statistics.currentDead = this.population.deadPeople.length;
     }
-    
-    update = function() {
+
+    moveToQuarantine = function() {
+        /* Remove from main layer */
+        this.circle.remove();
+
+        /* Create new circle for quarantine layer */
+        this.circle_quarantine = new Konva.Circle({
+            radius: 5,
+            fill: COLORS.circles.infected.fill,
+            stroke: COLORS.circles.infected.stroke,
+            x: Math.random() * stage_quarantine.attrs.width,
+            y: Math.random() * stage_quarantine.attrs.height,
+        });
+        layer_quarantine.add(this.circle_quarantine);
+        this.inQuarantine = true;
+    }
+
+    moveToDeadStage = function() {
+        /* Remove from layers */
+        if(this.circle) {
+            this.circle.destroy();
+        }
+        if(this.circle_quarantine) {
+            this.circle_quarantine.destroy();
+        }
+
+        /* Create new circle for dead layer */
+        this.circle_dead = new Konva.Circle({
+            radius: 5,
+            fill: COLORS.circles.dead.fill,
+            stroke: COLORS.circles.dead.stroke,
+            x: Math.random() * stage_dead.attrs.width,
+            y: Math.random() * stage_dead.attrs.height,
+        });
+        layer_dead.add(this.circle_dead);
+        this.inQuarantine = false;
+    }
+
+    moveCircle = function(circle, maxX, maxY) {
+        circle.setX(circle.getX() + this.speedX);
+        circle.setY(circle.getY() + this.speedY);
+
+        // If out of bound
+        if (circle.getX() > maxX - 5) {
+            this.speedX *= -1;
+            circle.setX(maxX - 5);
+        } else if (circle.getX() - 5 < minX) {
+            this.speedX *= -1;
+            circle.setX(minX + 5);
+        }
+
+        // If out of bound
+        if (circle.getY() > maxY - 5) {
+            this.speedY *= -0.85;
+            circle.setY(maxY - 5);
+        } else if (circle.getY() - 5 < minY) {
+            this.speedY *= -0.85;
+            circle.setY(minY + 5);
+        }
+    }
+
+    update = function () {
         this.speedX = getNewSpeed(this.speedX);
         this.speedY = getNewSpeed(this.speedY);
 
-        this.circle.setX(this.circle.getX() + this.speedX);
-        this.circle.setY(this.circle.getY() + this.speedY);
-
-        // If out of bound
-        if (this.circle.getX() > maxX - 5) {
-            this.speedX *= -1;
-            this.circle.setX(maxX - 5);
-        } else if (this.circle.getX() - 5 < minX) {
-            this.speedX *= -1;
-            this.circle.setX(minX + 5);
-        }
-
-        // If out of bound
-        if (this.circle.getY() > maxY - 5) {
-            this.speedY *= -0.85;
-            this.circle.setY(maxY - 5);
-        } else if (this.circle.getY() - 5 < minY) {
-            this.speedY *= -0.85;
-            this.circle.setY(minY + 5);
+        if(this.inQuarantine) {
+            this.moveCircle(this.circle_quarantine, stage_quarantine.attrs.width, stage_quarantine.attrs.height);
+        } else {
+            this.moveCircle(this.circle, maxX, maxY);
         }
 
         // Check if to be infected
-        if(this.infected == false && this.immune == false){
+        if (this.infected == false && this.immune == false) {
             this.population.infectedPeople.forEach(tmp_person => {
-                if(this._id !== tmp_person._id) {
+                if (this._id !== tmp_person._id) {
                     let a = this.circle.getX() - tmp_person.circle.getX();
                     let b = this.circle.getY() - tmp_person.circle.getY();
-                    let distance = Math.sqrt( a*a + b*b );
-                    if (distance < infectionRadius && !this.peopleInRadius.includes(tmp_person._id)){
-                        if(Math.random() < infectionRate) {
+                    let distance = Math.sqrt(a * a + b * b);
+                    if (distance < infectionRadius && !this.peopleInRadius.includes(tmp_person._id)) {
+                        if (Math.random() < infectionRate) {
                             this.infect();
                         }
                         this.peopleInRadius.push(tmp_person._id);
@@ -119,7 +167,7 @@ class Person {
 }
 
 class Population {
-    constructor(){
+    constructor() {
         this._id = population_ID++;
         this.people = [];
         this.infectedPeople = [];
@@ -127,36 +175,42 @@ class Population {
         this.deadPeople = [];
     }
 
-	getId = function() {
-		return _id;
+    getId = function () {
+        return _id;
     }
-    
-    getPerson = function(id) {
+
+    getPerson = function (id) {
         return this.people[id];
     }
 
-    addPerson = function() {
+    addPerson = function () {
         var person = new Person();
         person.setPopulation(this);
         this.people.push(person);
         return person;
     }
 
-    getSize = function() {
+    getSize = function () {
         return this.people.length;
     }
 
-    update = function() {
+    update = function () {
         for (var i = 0; i < this.people.length; i++) {
             this.getPerson(i).update();
         }
     }
 
-    clear = function() {
+    clear = function () {
         population_ID = 0;
         person_ID = 0;
         for (var i = 0; i < this.people.length; i++) {
             this.people[i].circle.destroy();
+            if (this.people[i].circle_quarantine) {
+                this.people[i].circle_quarantine.destroy();
+            }
+            if (this.people[i].circle_dead) {
+                this.people[i].circle_dead.destroy();
+            }
         }
 
         this.people = [];
@@ -184,14 +238,29 @@ var stage = new Konva.Stage({
     width: width,
     height: height
 });
+var stage_quarantine = new Konva.Stage({
+    container: 'stage_quarantine_container',
+    width: document.getElementById('stage_quarantine_container').offsetWidth,
+    height: document.getElementById('stage_quarantine_container').offsetHeight
+});
+var stage_dead = new Konva.Stage({
+    container: 'stage_dead_container',
+    width: document.getElementById('stage_dead_container').offsetWidth,
+    height: document.getElementById('stage_dead_container').offsetHeight
+});
+
+layer = new Konva.FastLayer();
+layer_quarantine = new Konva.FastLayer();
+layer_dead = new Konva.FastLayer();
+
+stage.add(layer);
+stage_quarantine.add(layer_quarantine);
+stage_dead.add(layer_dead);
 
 statistics.totalPeople = initialPopulation;
 statistics.currentInfected = initialInfected;
 statistics.currentCured = 0;
 statistics.currentDead = 0;
-
-layer = new Konva.FastLayer();
-stage.add(layer);
 
 function getNewSpeed(currentSpeed) {
     let newSpeed;
@@ -215,8 +284,8 @@ function startSimulation() {
     statistics.currentInfected = initialInfected;
     statistics.currentDead = 0;
 
-    requestAnimationFrameCall = window.requestAnimationFrame(update);
-    
+    requestAnimationFrameCall = window.requestAnimationFrame(updateAnimationFrame);
+
     for (var i = 0; i < initialPopulation; i++) {
         var person = population.addPerson();
 
@@ -226,6 +295,8 @@ function startSimulation() {
         layer.add(person.circle);
     }
     layer.batchDraw();
+    layer_quarantine.batchDraw();
+    layer_dead.batchDraw();
     dailyCallInterval = setInterval(dailyCall, 1000);
 }
 
@@ -237,11 +308,15 @@ function stopSimulation() {
     }
 }
 
-function update() {
+function updateAnimationFrame() {
     cancelAnimationFrame(requestAnimationFrameCall);
     population.update();
+
     layer.batchDraw();
-    requestAnimationFrameCall = requestAnimationFrame(update);
+    layer_quarantine.batchDraw();
+    layer_dead.batchDraw();
+    
+    requestAnimationFrameCall = requestAnimationFrame(updateAnimationFrame);
 }
 
 function dailyCall() {
@@ -249,22 +324,21 @@ function dailyCall() {
         let person = population.getPerson(i);
 
         /* Check if person should become healthy */
-        if(person.infected) {
-            let infectedDays = (Date.now() - person.infectedTimestamp) / 1000;
+        let infectedDays = (person.infected) ? (Date.now() - person.infectedTimestamp) / 1000 : 0;
+        if (person.infected) {
             if (infectedDays > infectionDuration) {
                 person.immunize();
             }
         }
 
         /* Check if person should go in (or come back from) quarantine */
-        if(quarantineActivated) {
-            if (person.infected && !person.inQuarantine && !person.isAsymptomatic) {
-                // TODO: move in quarantine
-            }
-            if (person.inQuarantine && !person.infected) {
-                // TODO: end quarantine
-
-            }
+        if (quarantineActivated && person.infected && !person.inQuarantine && !person.isAsymptomatic && infectedDays > daysBeforeSymphtoms) {
+            person.moveToQuarantine();
+        }
+        if (person.inQuarantine && !person.infected) {
+            layer.add(person.circle);
+            person.circle_quarantine.remove();
+            person.inQuarantine = false;
         }
 
         /* Reset people in radius to prevent to not infect people for days when speed is low */

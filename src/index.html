@@ -4,12 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Epidemic simulator - Luca Dibattista</title>
+  <title>Epidemic simulator online - Luca Dibattista</title>
 
   <!-- Bootstrap core CSS -->
   <link href="./plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="shortcut icon" type="image/png"
-    href="./images/iconfinder_virus-cell-life-biology-Microorganism_5859167.svg" />
+  <link rel="shortcut icon" type="image/svg" href="./images/iconfinder_virus-cell-life-biology-Microorganism_5859167.svg" />
 
   <style>
     .bd-placeholder-img {
@@ -39,6 +38,17 @@
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="https://lucadibattista.it">Luca Dibattista</a>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="https://lucadibattista.it/">Home</a>
+        <a class="nav-item nav-link" href="https://lucadibattista.it/portfolio/">Portfolio</a>
+        <a class="nav-item nav-link" href="https://lucadibattista.it/blog/">Blog</a>
+        <a class="nav-item nav-link active" href="#">Epidemic simulator <span class="sr-only">(current)</span></a>
+      </div>
+    </div>
   </nav>
 
   <main role="main" class="container">
@@ -66,6 +76,16 @@
         </div>
         <div class="col-sm-6">
           <canvas id="chart" width="400" height="400">Your browser is not compatible</canvas>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <h6>Quarantine</h6>
+          <div id="stage_quarantine_container" style="border: #000 1px solid; min-height: 100px;"></div>
+        </div>
+        <div class="col-sm-6">
+          <h6>Dead</h6>
+          <div id="stage_dead_container" style="border: #000 1px solid; min-height: 100px;"></div>
         </div>
       </div>
     </div>
@@ -129,14 +149,14 @@
         <div class="form-group row">
           <div class="col-sm-4">
             <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="control_quarantine" disabled>
-              <label class="custom-control-label" for="control_quarantine">Activate quarantine (coming soon...)</label>
+              <input type="checkbox" class="custom-control-input" id="control_quarantine">
+              <label class="custom-control-label" for="control_quarantine">Activate quarantine</label>
             </div>
           </div>
           <div class="col-sm-4">
             <label for="control_desease_duration">Days before quarantine</label>
             <input type="number" id="control_days_to_quarantine" class="form-control"
-              aria-describedby="control_desease_duration_help" disabled>
+              aria-describedby="control_desease_duration_help">
             <small id="control_desease_duration_help" class="form-text text-muted">
               How many days before showing symphtoms and going in quarantine
             </small>
@@ -145,7 +165,7 @@
             <label for="control_asymptomatic_rate">Asymptomatic rate: <span
                 id="control_asymptomatic_rate_text"></span>%</label>
             <input type="range" id="control_asymptomatic_rate" class="form-control"
-              aria-describedby="control_asymptomatic_rate_help" disabled>
+              aria-describedby="control_asymptomatic_rate_help">
             <small id="control_asymptomatic_rate_help" class="form-text text-muted">
               How many, among people who get the virus, don't go in quarantine (maybe for not showing symphtoms)
             </small>
