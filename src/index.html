@@ -97,24 +97,21 @@
         <div class="form-group row">
           <div class="col-sm-4">
             <label for="control_initial_population">Initial population</label>
-            <input type="number" id="control_initial_population" class="form-control"
-              aria-describedby="control_initial_population_help">
+            <input type="number" id="control_initial_population" class="form-control" aria-describedby="control_initial_population_help">
             <small id="control_initial_population_help" class="form-text text-muted">
               Number of total people
             </small>
           </div>
           <div class="col-sm-4">
             <label for="control_initial_infected">Initial infected</label>
-            <input type="number" id="control_initial_infected" class="form-control"
-              aria-describedby="control_initial_infected_help">
+            <input type="number" id="control_initial_infected" class="form-control" aria-describedby="control_initial_infected_help">
             <small id="control_initial_infected_help" class="form-text text-muted">
               Number of initial people infected
             </small>
           </div>
           <div class="col-sm-4">
             <label for="control_people_speed">People speed</label>
-            <input type="range" id="control_people_speed" class="form-control"
-              aria-describedby="control_people_speed_help">
+            <input type="range" id="control_people_speed" class="form-control-range" aria-describedby="control_people_speed_help">
             <small id="control_people_speed_help" class="form-text text-muted">
               Speed with which people move
             </small>
@@ -123,24 +120,21 @@
         <div class="form-group row">
           <div class="col-sm-4">
             <label for="control_desease_duration">Desease duration</label>
-            <input type="number" id="control_desease_duration" class="form-control"
-              aria-describedby="control_desease_duration_help">
+            <input type="number" id="control_desease_duration" class="form-control" aria-describedby="control_desease_duration_help">
             <small id="control_desease_duration_help" class="form-text text-muted">
               How many days before dying or healing
             </small>
           </div>
           <div class="col-sm-4">
             <label for="control_infection_rate">Infection rate: <span id="control_infection_rate_text"></span>%</label>
-            <input type="range" id="control_infection_rate" class="form-control"
-              aria-describedby="control_infection_rate_help">
+            <input type="range" id="control_infection_rate" class="form-control-range" aria-describedby="control_infection_rate_help">
             <small id="control_infection_rate_help" class="form-text text-muted">
               The probability for an infected to infect another person in the nearby
             </small>
           </div>
           <div class="col-sm-4">
             <label for="control_lethality_rate">Lethality: <span id="control_lethality_rate_text"></span>%</label>
-            <input type="range" id="control_lethality_rate" class="form-control"
-              aria-describedby="control_lethality_rate_help">
+            <input type="range" id="control_lethality_rate" class="form-control-range" aria-describedby="control_lethality_rate_help">
             <small id="control_lethality_rate_help" class="form-text text-muted">
               The probability for an infected to die
             </small>
@@ -155,8 +149,7 @@
           </div>
           <div class="col-sm-4">
             <label for="control_desease_duration">Days before quarantine</label>
-            <input type="number" id="control_days_to_quarantine" class="form-control"
-              aria-describedby="control_desease_duration_help">
+            <input type="number" id="control_days_to_quarantine" class="form-control" aria-describedby="control_desease_duration_help">
             <small id="control_desease_duration_help" class="form-text text-muted">
               How many days before showing symphtoms and going in quarantine
             </small>
@@ -164,8 +157,7 @@
           <div class="col-sm-4">
             <label for="control_asymptomatic_rate">Asymptomatic rate: <span
                 id="control_asymptomatic_rate_text"></span>%</label>
-            <input type="range" id="control_asymptomatic_rate" class="form-control"
-              aria-describedby="control_asymptomatic_rate_help">
+            <input type="range" id="control_asymptomatic_rate" class="form-control-range" aria-describedby="control_asymptomatic_rate_help">
             <small id="control_asymptomatic_rate_help" class="form-text text-muted">
               How many, among people who get the virus, don't go in quarantine (maybe for not showing symphtoms)
             </small>
