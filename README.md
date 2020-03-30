@@ -1,4 +1,8 @@
 # Epidemic simulator
 A HTML/JavaScript simulator for an epidemc on a population.
 
-Demo: https://epidemic.lucadibattista.it/
+### Live demo
+https://epidemic.lucadibattista.it/
+
+### Screenshot
+![Simulator screenshot](/images/simulator-screen.png)
