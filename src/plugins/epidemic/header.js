@@ -27,9 +27,14 @@ infectionRate = 0.1;
 infectionDuration = 14;
 lethalityRate = 0.02;
 
+/* Quarantine */
 quarantineActivated = true;
 daysBeforeSymphtoms = 5;
 asymptomaticRate = 0.1;
+
+/* Intensive care */
+intensiveCareRate = 0.2;
+intensiveCareBeds = Math.ceil((10) / 1000 * initialPopulation)
 
 var lineGraph;
 
@@ -37,6 +42,7 @@ var lineGraph;
 var counters = {
     healthy: document.getElementById('total_healthy'),
     infected: document.getElementById('total_infected'),
+    in_quarantine: document.getElementById('total_in_quarantine'),
     immune: document.getElementById('total_immune'),
     dead: document.getElementById('total_dead'),
 }
@@ -58,6 +64,15 @@ var statistics = {
         this._currentInfected = value;
         counters.infected.innerHTML = this._currentInfected;
         counters.healthy.innerHTML = this.currentHealthy;
+    },
+
+    /* Current in quarantine (among the infected) */
+    get currentInQuarantine() {
+        return this._currentInQuarantine;
+    },
+    set currentInQuarantine(value) {
+        this._currentInQuarantine = value;
+        counters.in_quarantine.innerHTML = this._currentInQuarantine;
     },
     
     /* Current cured */
