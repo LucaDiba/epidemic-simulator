@@ -6,13 +6,13 @@ document.getElementById('control_people_speed').addEventListener('change', funct
 });
 document.getElementById('control_initial_population').addEventListener('change', function (e) {
     initialPopulation = this.value;
-    document.getElementById('total_people').innerHTML = initialPopulation;
+    statistics.totalPeople = initialPopulation;
 
     lineGraph.options.scales.yAxes[0].ticks.max = parseFloat(initialPopulation);
     lineGraph.update();
 });
 document.getElementById('control_initial_infected').addEventListener('change', function (e) {
-    inputInitialInfected = this.value;
+    inputInitialInfected = parseInt(this.value);
     if (inputInitialInfected > initialPopulation) {
         alert('Number of infected must be lower than the number of total people');
         this.value = initialInfected;
@@ -61,13 +61,29 @@ document.getElementById('control_start').addEventListener('click', function (e) 
     updateChartInterval = setInterval(updateChart, 1000);
 });
 
+/* Add a line to the graph whenever some parameter changes */
+// TODO: add Chart Annotation plugin: https://github.com/chartjs/Chart.js/issues/4495#issuecomment-315238365
+
+// document.getElementById('control_form').addEventListener('change', function(){
+//     config.options.annotation.annotations.push({
+//         type: "line",
+//         mode: "vertical",
+//         scaleID: "x-axis-0",
+//         value: elapsedDays,
+//         borderColor: "red",
+//         label: {
+//           content: ".",
+//           enabled: true,
+//           position: "top"
+//         }
+//       });
+// })
+
 document.getElementById('simulator').style.display = 'none';
 
 document.getElementById('control_initial_population').value = initialPopulation;
-document.getElementById('total_people').innerHTML = initialPopulation;
 
 document.getElementById('control_initial_infected').value = initialInfected;
-document.getElementById('total_infected').innerHTML = initialInfected;
 
 document.getElementById('control_people_speed').value = maxVelocity * 100 / 5;
 

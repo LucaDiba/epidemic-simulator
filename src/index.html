@@ -57,17 +57,17 @@
         <h1>Epidemic simulator</h1>
       </div>
       <div class="row">
-        <div class="alert alert-info col-sm-3" role="alert">
-          <span id="total_people"></span> total people<br>
-        </div>
         <div class="alert alert-danger col-sm-3" role="alert">
           <span id="total_infected"></span> infected<br>
         </div>
-        <div class="alert alert-success col-sm-3" role="alert">
+        <div class="alert alert-light border border-dark col-sm-3" role="alert">
+          <span id="total_healthy"></span> healthy people<br>
+        </div>
+        <div class="alert alert-primary col-sm-3" role="alert">
           <span id="total_immune"></span> cured<br>
         </div>
         <div class="alert alert-dark col-sm-3" role="alert">
-          <span id="total_dead"></span> dead<br>
+          <span id="total_dead"></span> deaths<br>
         </div>
       </div>
       <div class="row">
@@ -93,7 +93,7 @@
       <h3>Simulation parameters</h3>
     </div>
     <div class="row mb-5">
-      <form class="col-sm-12">
+      <form class="col-sm-12" id="control_form">
         <div class="form-group row">
           <div class="col-sm-4">
             <label for="control_initial_population">Initial population</label>

@@ -4,12 +4,13 @@ var dailyCallInterval;
 var runningSimulation = false;
 var layer;
 var requestAnimationFrameCall;
+const CIRCLE_RADIUS = 5;
 
 class Person {
     constructor() {
         this._id = person_ID++;
         this.circle = new Konva.Circle({
-            radius: 5,
+            radius: CIRCLE_RADIUS,
             fill: COLORS.circles.healthy.fill,
             stroke: COLORS.circles.healthy.stroke,
             x: Math.random() * maxX,
@@ -79,11 +80,11 @@ class Person {
 
         /* Create new circle for quarantine layer */
         this.circle_quarantine = new Konva.Circle({
-            radius: 5,
+            radius: CIRCLE_RADIUS,
             fill: COLORS.circles.infected.fill,
             stroke: COLORS.circles.infected.stroke,
-            x: Math.random() * stage_quarantine.attrs.width,
-            y: Math.random() * stage_quarantine.attrs.height,
+            x: Math.random() * (stage_quarantine.attrs.width - 2 * CIRCLE_RADIUS) + CIRCLE_RADIUS,
+            y: Math.random() * (stage_quarantine.attrs.height - 2 * CIRCLE_RADIUS) + CIRCLE_RADIUS,
         });
         layer_quarantine.add(this.circle_quarantine);
         this.inQuarantine = true;
@@ -100,11 +101,11 @@ class Person {
 
         /* Create new circle for dead layer */
         this.circle_dead = new Konva.Circle({
-            radius: 5,
+            radius: CIRCLE_RADIUS,
             fill: COLORS.circles.dead.fill,
             stroke: COLORS.circles.dead.stroke,
-            x: Math.random() * stage_dead.attrs.width,
-            y: Math.random() * stage_dead.attrs.height,
+            x: Math.random() * (stage_dead.attrs.width - 2 * CIRCLE_RADIUS) + CIRCLE_RADIUS,
+            y: Math.random() * (stage_dead.attrs.height - 2 * CIRCLE_RADIUS) + CIRCLE_RADIUS,
         });
         layer_dead.add(this.circle_dead);
         this.inQuarantine = false;

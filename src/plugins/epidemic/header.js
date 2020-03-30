@@ -10,7 +10,7 @@ var COLORS = {
         },
         immune: {
             fill: '#00FFE7',
-            stroke: '005eff',
+            stroke: '#005eff',
         },
         dead: {
             fill: '#000000',
@@ -35,29 +35,32 @@ var lineGraph;
 
 /*  */
 var counters = {
-    people: document.getElementById('total_people'),
+    healthy: document.getElementById('total_healthy'),
     infected: document.getElementById('total_infected'),
     immune: document.getElementById('total_immune'),
     dead: document.getElementById('total_dead'),
 }
 var statistics = {
+    /* Total people */
     get totalPeople() {
         return this._totalPeople;
     },
     set totalPeople(value) {
         this._totalPeople = value;
-        counters.people.innerHTML = this._totalPeople;
+        counters.healthy.innerHTML = this.currentHealthy;
     },
 
+    /* Current infected */
     get currentInfected() {
         return this._currentInfected;
     },
     set currentInfected(value) {
         this._currentInfected = value;
         counters.infected.innerHTML = this._currentInfected;
+        counters.healthy.innerHTML = this.currentHealthy;
     },
-
     
+    /* Current cured */
     get currentCured() {
         return this._currentCured;
     },
@@ -66,11 +69,17 @@ var statistics = {
         counters.immune.innerHTML = this._currentCured;
     },
 
+    /* Currend deaths */
     get currentDead() {
         return this._currentDead;
     },
     set currentDead(value) {
         this._currentDead = value;
         counters.dead.innerHTML = this._currentDead;
+    },
+
+    /* Current healthy */
+    get currentHealthy() {
+        return this._totalPeople - this._currentInfected - this.currentCured - this._currentDead;
     },
 }
