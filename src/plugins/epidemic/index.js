@@ -26,18 +26,18 @@ class Person {
         this.peopleInRadius = [];
     }
 
-    getId = function () {
+    getId() {
         return _id;
     }
-    getPopulation = function () {
+    getPopulation() {
         return this.population;
     }
 
-    setPopulation = function (pop) {
+    setPopulation(pop) {
         this.population = pop;
     }
 
-    infect = function () {
+    infect() {
         if (this.infected == false && this.immune == false) {
             this.infected = true;
             this.infectedTimestamp = Date.now();
@@ -50,7 +50,7 @@ class Person {
         }
     }
 
-    immunize = function () {
+    immunize() {
         this.immune = true;
         this.infected = false;
         this.circle.fill(COLORS.circles.immune.fill);
@@ -74,7 +74,7 @@ class Person {
         statistics.currentDead = this.population.deadPeople.length;
     }
 
-    moveToQuarantine = function() {
+    moveToQuarantine() {
         /* Remove from main layer */
         this.circle.remove();
 
@@ -90,7 +90,7 @@ class Person {
         this.inQuarantine = true;
     }
 
-    moveToDeadStage = function() {
+    moveToDeadStage() {
         /* Remove from layers */
         if(this.circle) {
             this.circle.destroy();
@@ -108,10 +108,9 @@ class Person {
             y: Math.random() * (stage_dead.attrs.height - 2 * CIRCLE_RADIUS) + CIRCLE_RADIUS,
         });
         layer_dead.add(this.circle_dead);
-        this.inQuarantine = false;
     }
 
-    moveCircle = function(circle, maxX, maxY) {
+    moveCircle(circle, maxX, maxY) {
         circle.setX(circle.getX() + this.speedX);
         circle.setY(circle.getY() + this.speedY);
 
@@ -134,7 +133,7 @@ class Person {
         }
     }
 
-    update = function () {
+    update() {
         this.speedX = getNewSpeed(this.speedX);
         this.speedY = getNewSpeed(this.speedY);
 
@@ -176,32 +175,32 @@ class Population {
         this.deadPeople = [];
     }
 
-    getId = function () {
+    getId() {
         return _id;
     }
 
-    getPerson = function (id) {
+    getPerson(id) {
         return this.people[id];
     }
 
-    addPerson = function () {
+    addPerson() {
         var person = new Person();
         person.setPopulation(this);
         this.people.push(person);
         return person;
     }
 
-    getSize = function () {
+    getSize() {
         return this.people.length;
     }
 
-    update = function () {
+    update() {
         for (var i = 0; i < this.people.length; i++) {
             this.getPerson(i).update();
         }
     }
 
-    clear = function () {
+    clear() {
         population_ID = 0;
         person_ID = 0;
         for (var i = 0; i < this.people.length; i++) {
