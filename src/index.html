@@ -8,7 +8,8 @@
 
   <!-- Bootstrap core CSS -->
   <link href="./plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="shortcut icon" type="image/svg" href="./images/iconfinder_virus-cell-life-biology-Microorganism_5859167.svg" />
+  <link rel="shortcut icon" type="image/svg"
+    href="./images/iconfinder_virus-cell-life-biology-Microorganism_5859167.svg" />
 
   <style>
     .bd-placeholder-img {
@@ -63,11 +64,12 @@
         <div class="alert alert-light border border-dark col-sm-3" role="alert">
           <span id="total_healthy"></span> healthy people<br>
         </div>
-        <div class="alert alert-primary col-sm-3" role="alert">
+        <div class="alert alert-primary col-sm-2" role="alert">
           <span id="total_immune"></span> cured<br>
         </div>
-        <div class="alert alert-dark col-sm-3" role="alert">
+        <div class="alert alert-dark col-sm-4" role="alert">
           <span id="total_dead"></span> deaths<br>
+          of which <span id="total_dead_for_intensive_care"></span> for missing beds in intensive care<br>
         </div>
       </div>
       <div class="row">
@@ -79,11 +81,15 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-6">
-          <h6>Quarantine</h6>
+        <div class="col-sm-4">
+          <h6>Quarantine (<span id="total_in_quarantine"></span> people)</h6>
           <div id="stage_quarantine_container" class="border rounded border-dark" style="min-height: 100px;"></div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+          <h6>Intensive care (<span id="total_in_intensive_care"></span> / <span id="max_total_in_intensive_care"></span> people)</h6>
+          <div id="stage_intensive_care_container" class="border rounded border-dark" style="min-height: 100px;"></div>
+        </div>
+        <div class="col-sm-4">
           <h6>Dead</h6>
           <div id="stage_dead_container" class="border rounded border-dark" style="min-height: 100px;"></div>
         </div>
@@ -113,7 +119,8 @@
             <label for="control_people_speed">People speed</label>
             <input type="range" id="control_people_speed" class="form-control-range" aria-describedby="control_people_speed_help">
             <small id="control_people_speed_help" class="form-text text-muted">
-              Speed with which people move
+              Speed with which people move.<br>
+              Decrease it to simulate lockdown
             </small>
           </div>
         </div>
@@ -155,11 +162,26 @@
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_asymptomatic_rate">Asymptomatic rate: <span
-                id="control_asymptomatic_rate_text"></span>%</label>
+            <label for="control_asymptomatic_rate">Asymptomatic rate: <span id="control_asymptomatic_rate_text"></span>%</label>
             <input type="range" id="control_asymptomatic_rate" class="form-control-range" aria-describedby="control_asymptomatic_rate_help">
             <small id="control_asymptomatic_rate_help" class="form-text text-muted">
               How many, among people who get the virus, don't go in quarantine (maybe for not showing symphtoms)
+            </small>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-4">
+            <label for="control_intensive_care_rate">Intensive care rate: <span id="control_intensive_care_rate_text"></span>%</label>
+            <input type="range" id="control_intensive_care_rate" class="form-control-range" aria-describedby="control_intensive_care_rate_help">
+            <small id="control_intensive_care_rate_help" class="form-text text-muted">
+              How many, among people who get the virus, need intensive care to not die
+            </small>
+          </div>
+          <div class="col-sm-4">
+            <label for="control_intensive_care_beds">Number of IC beds every 100 people</label>
+            <input type="number" id="control_intensive_care_beds" class="form-control" aria-describedby="control_intensive_care_beds_help">
+            <small id="control_intensive_care_beds_help" class="form-text text-muted">
+              E.g.: if there are 2 beds for 200 people, put "1" (1 bed every 100 people).<br>If there are no beds available, people who need IC will die
             </small>
           </div>
         </div>
@@ -174,9 +196,7 @@
     <div class="container">
       <span class="text-muted">
         Powered by <a href="https://lucadibattista.it">Luca Dibattista</a>.<br>
-        Code is <a href="https://github.com/LucaDiba/epidemic-simulator" target="_blank">available on GitHub</a> under
-        the <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License v3.0</a>
-        license.
+        Code is <a href="https://github.com/LucaDiba/epidemic-simulator" target="_blank">available on GitHub</a> under the <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License v3.0</a>.
       </span>
     </div>
   </footer>
@@ -186,5 +206,14 @@
   <script src="./plugins/epidemic/index.js"></script>
   <script src="./plugins/epidemic/listeners.js"></script>
   <script src="./plugins/epidemic/chart.js"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32794172-6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-32794172-8');
+  </script>
 
 </html>
