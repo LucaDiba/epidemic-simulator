@@ -5,13 +5,13 @@ var config = {
     data: {
         labels: [],
         datasets: [{
-            label: 'Infected in IC',
+            label: 'Intensive care',
             backgroundColor: COLORS.circles.intensive_care.fill,
             borderColor: COLORS.circles.intensive_care.stroke,
             data: [],
             fill: 'origin',
         }, {
-            label: 'Infected non-IC',
+            label: 'Infected',
             backgroundColor: COLORS.circles.infected.fill,
             borderColor: COLORS.circles.infected.stroke,
             data: [],
