@@ -1,3 +1,10 @@
+var listeners = {
+    intensiveCare: function () {
+        intensiveCareBeds = Math.ceil(parseInt(document.getElementById('control_intensive_care_beds').value) / 100 * initialPopulation);
+        document.getElementById('max_total_in_intensive_care').innerHTML = intensiveCareBeds;
+    },
+};
+
 /* People speed */
 document.getElementById('control_people_speed').addEventListener('change', function (e) {
     let inputPeopleSpeed = this.value;
@@ -8,12 +15,13 @@ document.getElementById('control_people_speed').addEventListener('change', funct
 document.getElementById('control_initial_population').addEventListener('change', function (e) {
     initialPopulation = this.value;
     statistics.totalPeople = initialPopulation;
+    listeners.intensiveCare();
 
     lineGraph.options.scales.yAxes[0].ticks.max = parseFloat(initialPopulation);
     lineGraph.update();
 });
 
- /* Initial infected */
+/* Initial infected */
 document.getElementById('control_initial_infected').addEventListener('change', function (e) {
     inputInitialInfected = parseInt(this.value);
     if (inputInitialInfected > initialPopulation) {
@@ -65,10 +73,8 @@ document.getElementById('control_intensive_care_rate').addEventListener('input',
     document.getElementById('control_intensive_care_rate_text').innerHTML = Math.round(intensiveCareRate * 100);
 });
 
-/* Intensive care beds every 1000 people */
-document.getElementById('control_intensive_care_beds').addEventListener('change', function (e) {
-    intensiveCareBeds = this.value / 1000 * initialPopulation;
-});
+/* Intensive care beds every 100 people */
+document.getElementById('control_intensive_care_beds').addEventListener('change', listeners.intensiveCare);
 
 /* Button: stop simulation */
 document.getElementById('control_stop').addEventListener('click', function (e) {
@@ -85,7 +91,6 @@ document.getElementById('control_start').addEventListener('click', function (e) 
     location.hash = "#simulator";
 
     startSimulation();
-
     updateChart();
     updateChartInterval = setInterval(updateChart, 1000);
 });
@@ -136,4 +141,5 @@ document.getElementById('control_asymptomatic_rate_text').innerHTML = asymptomat
 document.getElementById('control_intensive_care_rate').value = intensiveCareRate * 100;
 document.getElementById('control_intensive_care_rate_text').innerHTML = intensiveCareRate * 100;
 
-document.getElementById('control_intensive_care_beds').value = intensiveCareBeds * 1000 / initialPopulation;
+document.getElementById('control_intensive_care_beds').value = intensiveCareBeds * 100 / initialPopulation;
+document.getElementById('max_total_in_intensive_care').innerHTML = intensiveCareBeds;

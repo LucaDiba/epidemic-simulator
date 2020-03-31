@@ -64,11 +64,12 @@
         <div class="alert alert-light border border-dark col-sm-3" role="alert">
           <span id="total_healthy"></span> healthy people<br>
         </div>
-        <div class="alert alert-primary col-sm-3" role="alert">
+        <div class="alert alert-primary col-sm-2" role="alert">
           <span id="total_immune"></span> cured<br>
         </div>
-        <div class="alert alert-dark col-sm-3" role="alert">
+        <div class="alert alert-dark col-sm-4" role="alert">
           <span id="total_dead"></span> deaths<br>
+          of which <span id="total_dead_for_intensive_care"></span> for missing beds in intensive care<br>
         </div>
       </div>
       <div class="row">
@@ -102,50 +103,45 @@
         <div class="form-group row">
           <div class="col-sm-4">
             <label for="control_initial_population">Initial population</label>
-            <input type="number" id="control_initial_population" class="form-control"
-              aria-describedby="control_initial_population_help">
+            <input type="number" id="control_initial_population" class="form-control" aria-describedby="control_initial_population_help">
             <small id="control_initial_population_help" class="form-text text-muted">
               Number of total people
             </small>
           </div>
           <div class="col-sm-4">
             <label for="control_initial_infected">Initial infected</label>
-            <input type="number" id="control_initial_infected" class="form-control"
-              aria-describedby="control_initial_infected_help">
+            <input type="number" id="control_initial_infected" class="form-control" aria-describedby="control_initial_infected_help">
             <small id="control_initial_infected_help" class="form-text text-muted">
               Number of initial people infected
             </small>
           </div>
           <div class="col-sm-4">
             <label for="control_people_speed">People speed</label>
-            <input type="range" id="control_people_speed" class="form-control-range"
-              aria-describedby="control_people_speed_help">
+            <input type="range" id="control_people_speed" class="form-control-range" aria-describedby="control_people_speed_help">
             <small id="control_people_speed_help" class="form-text text-muted">
-              Speed with which people move
+              Speed with which people move.<br>
+              Decrease it to simulate lockdown
             </small>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-sm-4">
             <label for="control_desease_duration">Desease duration</label>
-            <input type="number" id="control_desease_duration" class="form-control"
-              aria-describedby="control_desease_duration_help">
+            <input type="number" id="control_desease_duration" class="form-control" aria-describedby="control_desease_duration_help">
             <small id="control_desease_duration_help" class="form-text text-muted">
               How many days before dying or healing
             </small>
           </div>
           <div class="col-sm-4">
             <label for="control_infection_rate">Infection rate: <span id="control_infection_rate_text"></span>%</label>
-            <input type="range" id="control_infection_rate" class="form-control-range"
-              aria-describedby="control_infection_rate_help">
+            <input type="range" id="control_infection_rate" class="form-control-range" aria-describedby="control_infection_rate_help">
             <small id="control_infection_rate_help" class="form-text text-muted">
               The probability for an infected to infect another person in the nearby
             </small>
           </div>
           <div class="col-sm-4">
             <label for="control_lethality_rate">Lethality: <span id="control_lethality_rate_text"></span>%</label>
-            <input type="range" id="control_lethality_rate" class="form-control-range"
-              aria-describedby="control_lethality_rate_help">
+            <input type="range" id="control_lethality_rate" class="form-control-range" aria-describedby="control_lethality_rate_help">
             <small id="control_lethality_rate_help" class="form-text text-muted">
               The probability for an infected to die
             </small>
@@ -160,17 +156,14 @@
           </div>
           <div class="col-sm-4">
             <label for="control_desease_duration">Days before quarantine</label>
-            <input type="number" id="control_days_to_quarantine" class="form-control"
-              aria-describedby="control_desease_duration_help">
+            <input type="number" id="control_days_to_quarantine" class="form-control" aria-describedby="control_desease_duration_help">
             <small id="control_desease_duration_help" class="form-text text-muted">
               How many days before showing symphtoms and going in quarantine
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_asymptomatic_rate">Asymptomatic rate: <span
-                id="control_asymptomatic_rate_text"></span>%</label>
-            <input type="range" id="control_asymptomatic_rate" class="form-control-range"
-              aria-describedby="control_asymptomatic_rate_help">
+            <label for="control_asymptomatic_rate">Asymptomatic rate: <span id="control_asymptomatic_rate_text"></span>%</label>
+            <input type="range" id="control_asymptomatic_rate" class="form-control-range" aria-describedby="control_asymptomatic_rate_help">
             <small id="control_asymptomatic_rate_help" class="form-text text-muted">
               How many, among people who get the virus, don't go in quarantine (maybe for not showing symphtoms)
             </small>
@@ -178,20 +171,17 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-4">
-            <label for="control_intensive_care_rate">Intensive care rate: <span
-                id="control_intensive_care_rate_text"></span>%</label>
-            <input type="range" id="control_intensive_care_rate" class="form-control-range"
-              aria-describedby="control_intensive_care_rate_help">
+            <label for="control_intensive_care_rate">Intensive care rate: <span id="control_intensive_care_rate_text"></span>%</label>
+            <input type="range" id="control_intensive_care_rate" class="form-control-range" aria-describedby="control_intensive_care_rate_help">
             <small id="control_intensive_care_rate_help" class="form-text text-muted">
               How many, among people who get the virus, need intensive care to not die
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_intensive_care_beds">Number of IC beds every 1000 people</label>
-            <input type="number" id="control_intensive_care_beds" class="form-control"
-              aria-describedby="control_intensive_care_beds_help">
+            <label for="control_intensive_care_beds">Number of IC beds every 100 people</label>
+            <input type="number" id="control_intensive_care_beds" class="form-control" aria-describedby="control_intensive_care_beds_help">
             <small id="control_intensive_care_beds_help" class="form-text text-muted">
-              E.g.: if there are 2 beds for 2000 people, put "1" (1 bed every 1000 people)
+              E.g.: if there are 2 beds for 200 people, put "1" (1 bed every 100 people).<br>If there are no beds available, people who need IC will die
             </small>
           </div>
         </div>
@@ -206,8 +196,7 @@
     <div class="container">
       <span class="text-muted">
         Powered by <a href="https://lucadibattista.it">Luca Dibattista</a>.<br>
-        Code is <a href="https://github.com/LucaDiba/epidemic-simulator" target="_blank">available on GitHub</a> under
-        the <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License v3.0</a>.
+        Code is <a href="https://github.com/LucaDiba/epidemic-simulator" target="_blank">available on GitHub</a> under the <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License v3.0</a>.
       </span>
     </div>
   </footer>
@@ -224,7 +213,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'UA-32794172-6');
+    gtag('config', 'UA-32794172-8');
   </script>
 
 </html>

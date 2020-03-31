@@ -5,11 +5,17 @@ var config = {
     data: {
         labels: [],
         datasets: [{
-            label: 'Infected',
+            label: 'Infected in IC',
+            backgroundColor: COLORS.circles.intensive_care.fill,
+            borderColor: COLORS.circles.intensive_care.stroke,
+            data: [],
+            fill: 'origin',
+        }, {
+            label: 'Infected non-IC',
             backgroundColor: COLORS.circles.infected.fill,
             borderColor: COLORS.circles.infected.stroke,
             data: [],
-            fill: 'origin',
+            fill: '-1',
         }, {
             label: 'Healthy',
             fill: 'end',
@@ -81,6 +87,7 @@ function resetChart() {
     config.data.datasets[1].data = [];
     config.data.datasets[2].data = [];
     config.data.datasets[3].data = [];
+    config.data.datasets[4].data = [];
     elapsedDays = 0;
     if (updateChartInterval) {
         clearInterval(updateChartInterval);
@@ -88,21 +95,20 @@ function resetChart() {
     updateChart();
 }
 
-function pushData(total_healthy, total_infected, total_cured, total_dead) {
+function pushData(total_healthy, total_infected, total_in_intensive_care, total_cured, total_dead) {
     config.data.labels.push(elapsedDays++);
-    config.data.datasets[0].data.push(total_infected);
-    config.data.datasets[1].data.push(total_healthy);
-    config.data.datasets[2].data.push(total_cured);
-    config.data.datasets[3].data.push(total_dead);
+    config.data.datasets[0].data.push(total_in_intensive_care);
+    config.data.datasets[1].data.push(total_infected - total_in_intensive_care);
+    config.data.datasets[2].data.push(total_healthy);
+    config.data.datasets[3].data.push(total_cured);
+    config.data.datasets[4].data.push(total_dead);
     lineGraph.update();
 }
 
 function updateChart() {
-    let total_infected = statistics.currentInfected;
+    pushData(statistics.currentHealthy, statistics.currentInfected, statistics.currentInIntensiveCare, statistics.currentCured, statistics.currentDead);
 
-    pushData(statistics.currentHealthy, statistics.currentInfected, statistics.currentCured, statistics.currentDead);
-
-    if (total_infected === 0) {
+    if (statistics.currentInfected === 0) {
         clearInterval(updateChartInterval);
     }
 }
