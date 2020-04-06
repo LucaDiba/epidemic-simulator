@@ -13,12 +13,19 @@ document.getElementById('control_people_speed').addEventListener('change', funct
 
 /* Initial population */
 document.getElementById('control_initial_population').addEventListener('change', function (e) {
-    initialPopulation = this.value;
-    statistics.totalPeople = initialPopulation;
-    listeners.intensiveCare();
-
-    lineGraph.options.scales.yAxes[0].ticks.max = parseFloat(initialPopulation);
-    lineGraph.update();
+    this.value = parseInt(this.value);
+    inputInitialPopulation = this.value;
+    if (inputInitialPopulation > MAX_INITIAL_POPULATION) {
+        this.value = initialPopulation;
+        alert('The number is too high. Maximum value for initial population is ' + MAX_INITIAL_POPULATION);
+    } else {
+        initialPopulation = inputInitialPopulation;
+        statistics.totalPeople = initialPopulation;
+        listeners.intensiveCare();
+    
+        lineGraph.options.scales.yAxes[0].ticks.max = parseFloat(initialPopulation);
+        lineGraph.update();
+    }
 });
 
 /* Initial infected */

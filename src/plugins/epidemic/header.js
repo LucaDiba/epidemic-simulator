@@ -22,6 +22,7 @@ var COLORS = {
         }
     },
 }
+MAX_INITIAL_POPULATION = 1000;
 
 /* Population */
 maxVelocity = 3.0;
