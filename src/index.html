@@ -37,39 +37,57 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="https://lucadibattista.it">Luca Dibattista</a>
-    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button> -->
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="https://lucadibattista.it/">Home</a>
-        <a class="nav-item nav-link" href="https://lucadibattista.it/portfolio/">Portfolio</a>
-        <a class="nav-item nav-link" href="https://lucadibattista.it/blog/">Blog</a>
-        <a class="nav-item nav-link active" href="#">Epidemic simulator <span class="sr-only">(current)</span></a>
-      </div>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="https://lucadibattista.it/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="https://lucadibattista.it/portfolio/">Portfolio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="https://lucadibattista.it/blog/">Blog</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-item nav-link active" href="#">Epidemic simulator <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-item nav-link" href="#" onclick="translateDocument('en')"><img src="./images/flags/en-uk.svg" alt="English" width="16" height="16" /></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-item nav-link" href="#" onclick="translateDocument('it')"><img src="./images/flags/it.svg" alt="Italiano" width="16" height="16" /></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-item nav-link" href="#" onclick="translateDocument('nl')"><img src="./images/flags/nl.svg" alt="Dutch" width="16" height="16" /></a>
+        </li>
+      </ul>
     </div>
   </nav>
 
   <main role="main" class="container mt-4">
     <div id="simulator" class="mb-4">
       <div class="row">
-        <h1>Epidemic simulator</h1>
+        <h1 data-translate="title">Epidemic simulator</h1>
       </div>
       <div class="row">
         <div class="alert alert-danger col-sm-3" role="alert">
-          <span id="total_infected"></span> infected<br>
+          <span id="total_infected"></span> <span data-translate="infected">infected</span><br>
         </div>
         <div class="alert alert-light border border-dark col-sm-3" role="alert">
-          <span id="total_healthy"></span> healthy<br>
+          <span id="total_healthy"></span> <span data-translate="healthy">healthy</span><br>
         </div>
         <div class="alert alert-primary col-sm-2" role="alert">
-          <span id="total_immune"></span> cured<br>
+          <span id="total_immune"></span> <span data-translate="cured">cured</span><br>
         </div>
         <div class="alert alert-dark col-sm-4" role="alert">
-          <span id="total_dead"></span> deaths<br>
-          of which <span id="total_dead_for_intensive_care"></span> for missing beds in intensive care<br>
+          <span id="total_dead"></span> <span data-translate="dead">deaths</span><br>
+          <span data-translate="of_which">of which</span> <span id="total_dead_for_intensive_care"></span> <span data-translate="for_missing_beds">for missing beds in intensive care</span><br>
         </div>
       </div>
       <div class="row">
@@ -82,43 +100,43 @@
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <h6>Quarantine (<span id="total_in_quarantine"></span> people)</h6>
+          <h6><span data-translate="quarantine">Quarantine</span> (<span id="total_in_quarantine"></span> <span data-translate="people">people</span>)</h6>
           <div id="stage_quarantine_container" class="border rounded border-dark" style="min-height: 100px;"></div>
         </div>
         <div class="col-sm-4">
-          <h6>Intensive care (<span id="total_in_intensive_care"></span> / <span id="max_total_in_intensive_care"></span> people)</h6>
+          <h6><span data-translate="intensive_care">Intensive care</span> (<span id="total_in_intensive_care"></span> / <span id="max_total_in_intensive_care"></span> <span data-translate="people">people</span>)</h6>
           <div id="stage_intensive_care_container" class="border rounded border-dark" style="min-height: 100px;"></div>
         </div>
         <div class="col-sm-4">
-          <h6>Dead</h6>
+          <h6><span data-translate="Dead">Dead</span></h6>
           <div id="stage_dead_container" class="border rounded border-dark" style="min-height: 100px;"></div>
         </div>
       </div>
     </div>
     <div class="row">
-      <h3>Simulation parameters</h3>
+      <h3><span data-translate="simulation_parameters">Simulation parameters</span></h3>
     </div>
     <div class="row mb-5">
       <form class="col-sm-12" id="control_form">
         <div class="form-group row">
           <div class="col-sm-4">
-            <label for="control_initial_population">Initial population</label>
+            <label for="control_initial_population" data-translate="simulation_initial_population">Initial population</label>
             <input type="number" id="control_initial_population" class="form-control" aria-describedby="control_initial_population_help">
-            <small id="control_initial_population_help" class="form-text text-muted">
+            <small id="control_initial_population_help" class="form-text text-muted" data-translate="simulation_initial_population_help">
               Number of total people
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_initial_infected">Initial infected</label>
+            <label for="control_initial_infected" data-translate="simulation_initial_infected">Initial infected</label>
             <input type="number" id="control_initial_infected" class="form-control" aria-describedby="control_initial_infected_help">
-            <small id="control_initial_infected_help" class="form-text text-muted">
+            <small id="control_initial_infected_help" class="form-text text-muted" data-translate="simulation_initial_infected_help">
               Number of initial people infected
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_people_speed">People speed</label>
+            <label for="control_people_speed" data-translate="simulation_people_speed">People speed</label>
             <input type="range" id="control_people_speed" class="form-control-range" aria-describedby="control_people_speed_help">
-            <small id="control_people_speed_help" class="form-text text-muted">
+            <small id="control_people_speed_help" class="form-text text-muted" data-translate="simulation_people_speed_help">
               Speed with which people move.<br>
               Decrease it to simulate lockdown
             </small>
@@ -126,23 +144,23 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-4">
-            <label for="control_desease_duration">Desease duration</label>
+            <label for="control_desease_duration" data-translate="simulation_desease_duration">Desease duration</label>
             <input type="number" id="control_desease_duration" class="form-control" aria-describedby="control_desease_duration_help">
-            <small id="control_desease_duration_help" class="form-text text-muted">
+            <small id="control_desease_duration_help" class="form-text text-muted" data-translate="simulation_desease_duration_help">
               How many days before dying or healing
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_infection_rate">Infection rate: <span id="control_infection_rate_text"></span>%</label>
+            <label for="control_infection_rate"><span data-translate="simulation_infection_rate">Infection rate</span>: <span id="control_infection_rate_text"></span>%</label>
             <input type="range" id="control_infection_rate" class="form-control-range" aria-describedby="control_infection_rate_help">
-            <small id="control_infection_rate_help" class="form-text text-muted">
+            <small id="control_infection_rate_help" class="form-text text-muted" data-translate="simulation_infection_rate_help">
               The probability for an infected to infect another person in the nearby
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_lethality_rate">Lethality: <span id="control_lethality_rate_text"></span>%</label>
+            <label for="control_lethality_rate"><span data-translate="simulation_lethality">Lethality</span>: <span id="control_lethality_rate_text"></span>%</label>
             <input type="range" id="control_lethality_rate" class="form-control-range" aria-describedby="control_lethality_rate_help">
-            <small id="control_lethality_rate_help" class="form-text text-muted">
+            <small id="control_lethality_rate_help" class="form-text text-muted" data-translate="simulation_lethality_help">
               The probability for an infected to die
             </small>
           </div>
@@ -151,42 +169,42 @@
           <div class="col-sm-4">
             <div class="custom-control custom-switch">
               <input type="checkbox" class="custom-control-input" id="control_quarantine">
-              <label class="custom-control-label" for="control_quarantine">Activate quarantine</label>
+              <label class="custom-control-label" for="control_quarantine" data-translate="simulation_activate_quarantine">Activate quarantine</label>
             </div>
           </div>
           <div class="col-sm-4">
-            <label for="control_desease_duration">Days before quarantine</label>
+            <label for="control_desease_duration" data-translate="simulation_days_before_quarantine">Days before quarantine</label>
             <input type="number" id="control_days_to_quarantine" class="form-control" aria-describedby="control_desease_duration_help">
-            <small id="control_desease_duration_help" class="form-text text-muted">
+            <small id="control_desease_duration_help" class="form-text text-muted" data-translate="simulation_days_before_quarantine_help">
               How many days before showing symphtoms and going in quarantine
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_asymptomatic_rate">Asymptomatic rate: <span id="control_asymptomatic_rate_text"></span>%</label>
+            <label for="control_asymptomatic_rate"><span data-translate="simulation_asymptomatic_rate">Asymptomatic rate</span>: <span id="control_asymptomatic_rate_text"></span>%</label>
             <input type="range" id="control_asymptomatic_rate" class="form-control-range" aria-describedby="control_asymptomatic_rate_help">
-            <small id="control_asymptomatic_rate_help" class="form-text text-muted">
+            <small id="control_asymptomatic_rate_help" class="form-text text-muted" data-translate="simulation_asymptomatic_rate_help">
               How many, among people who get the virus, don't go in quarantine (maybe for not showing symphtoms)
             </small>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-sm-4">
-            <label for="control_intensive_care_rate">Intensive care rate: <span id="control_intensive_care_rate_text"></span>%</label>
+            <label for="control_intensive_care_rate"><span data-translate="simulation_icu_rate">Intensive care rate</span>: <span id="control_intensive_care_rate_text"></span>%</label>
             <input type="range" id="control_intensive_care_rate" class="form-control-range" aria-describedby="control_intensive_care_rate_help">
-            <small id="control_intensive_care_rate_help" class="form-text text-muted">
+            <small id="control_intensive_care_rate_help" class="form-text text-muted" data-translate="simulation_icu_rate_help">
               How many, among people who get the virus, need intensive care to not die
             </small>
           </div>
           <div class="col-sm-4">
-            <label for="control_intensive_care_beds">Number of IC beds every 100 people</label>
+            <label for="control_intensive_care_beds" data-translate="simulation_icu_every_100">Number of IC beds every 100 people</label>
             <input type="number" id="control_intensive_care_beds" class="form-control" aria-describedby="control_intensive_care_beds_help">
-            <small id="control_intensive_care_beds_help" class="form-text text-muted">
+            <small id="control_intensive_care_beds_help" class="form-text text-muted" data-translate="simulation_icu_every_100_help">
               E.g.: if there are 2 beds for 200 people, put "1" (1 bed every 100 people).<br>If there are no beds available, people who need IC will die
             </small>
           </div>
         </div>
-        <button type="button" class="btn btn-secondary" id="control_stop">Stop simulation</button>
-        <button type="button" class="btn btn-primary" id="control_start">Start simulation</button>
+        <button type="button" class="btn btn-secondary" id="control_stop" data-translate='stop_simulation'>Stop simulation</button>
+        <button type="button" class="btn btn-primary" id="control_start" data-translate='start_simulation'>Start simulation</button>
       </form>
     </div>
 
@@ -202,10 +220,12 @@
   </footer>
 
   <script src="./plugins/bootstrap/js/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
   <script src="./plugins/epidemic/header.js"></script>
   <script src="./plugins/epidemic/index.js"></script>
   <script src="./plugins/epidemic/listeners.js"></script>
   <script src="./plugins/epidemic/chart.js"></script>
+  <script src="./plugins/translator/translator.js"></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32794172-6"></script>
