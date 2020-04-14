@@ -213,11 +213,40 @@
   <footer class="footer mt-auto py-3">
     <div class="container">
       <span class="text-muted">
-        Powered by <a href="https://lucadibattista.it">Luca Dibattista</a>. Inspired by <a href="https://www.youtube.com/watch?v=gxAaO2rsdIs" target="_blank">3Blue1Brown</a>.<br>
+        Powered by <a href="https://lucadibattista.it">Luca Dibattista</a>. <a href="#" data-toggle="modal" data-target="#creditsModal">Credits</a>.<br>
         Code is <a href="https://github.com/LucaDiba/epidemic-simulator" target="_blank">available on GitHub</a> under the <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License v3.0</a>.
       </span>
     </div>
   </footer>
+  <!-- Credits modal -->
+  <div class="modal fade" id="creditsModal" tabindex="-1" role="dialog" aria-labelledby="creditsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="creditsModalLabel">Credits</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li>Flag icons: <a href="https://www.flaticon.com/authors/freepik" title="Freepik" target="_blank">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon" target="_blank">Flaticon</a></li>
+            <li>
+              Translation
+              <ul>
+                <li>Dutch: Gregory V. H.</li>
+              </ul>
+            </li>
+            <li>Inspired by <a href="https://www.youtube.com/watch?v=gxAaO2rsdIs" target="_blank">3Blue1Brown</a></li>
+          </ul>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="./plugins/bootstrap/js/jquery-3.4.1.slim.min.js"></script>
   <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
