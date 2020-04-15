@@ -212,10 +212,10 @@ $(document).ready(function(){
             language = 'it';
             break;
         case 'nl':
-            langauge = 'nl';
+            language = 'nl';
             break;
         default:
-            langauge = 'en';
+            language = 'en';
     }
 
     translateDocument(language);
