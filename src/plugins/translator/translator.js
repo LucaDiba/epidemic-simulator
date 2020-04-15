@@ -198,4 +198,25 @@ function translateDocument(lang) {
         console.log(translation_id);
         document_string.innerText = translator_strings[translation_id][lang];
     }
+
+    $('#languageDropdown').html('<img src="./images/flags/'+ lang +'.svg" alt="English" width="20" height="20" />');
 }
+
+/* Translate document on page load */
+$(document).ready(function(){
+    // https://stackoverflow.com/questions/1043339/javascript-for-detecting-browser-language-preference
+    let browser_language = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage)
+    let language;
+    switch(browser_language){
+        case 'it':
+            language = 'it';
+            break;
+        case 'nl':
+            langauge = 'nl';
+            break;
+        default:
+            langauge = 'en';
+    }
+
+    translateDocument(language);
+});
