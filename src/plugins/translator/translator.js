@@ -166,7 +166,7 @@ translator_strings = {
     'simulation_days_before_quarantine': {
         'en': 'Days before quarantine',
         'it': 'Giorni prima della quarantena',
-        'nl': 'Dagen vóór quarantäne',
+        'nl': 'Dagen vóór quarantaine',
         'de': 'Tage bis zur Quarantänisierung'
     },
     'simulation_days_before_quarantine_help': {
@@ -209,6 +209,7 @@ translator_strings = {
         'en': 'E.g.: if there are 2 beds for 200 people, put "1" (1 bed every 100 people).\nIf there are no beds available, people who need IC will die',
         'it': 'Esempio: se ci sono 2 posti per 200 persone, inserire "1" (1 letto ogni 100 persone).\nQuando i posti in terapia intensiva terminano, le persone che ne hanno bisogno moriranno',
         'nl': 'Bijvoorbeeld: als er 2 bedden zijn voor 200 personen, zet dit op "1" (1 bed per 100 personen)\nAls er geen bedden beschikbaar zijn zullen mensen die deze zorgen nodig hebben sterven',
+        'de': 'Zum Beispiel: Wenn es 2 Betten für 200 Personen gibt, setzen Sie "1" (1 Bett alle 100 Personen).\nWenn keine Betten verfügbar sind, sterben Menschen, die IC benötigen',
     },
     'stop_simulation': {
         'en': 'Stop simulation',
