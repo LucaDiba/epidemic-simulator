@@ -199,7 +199,7 @@ function translateDocument(lang) {
         document_string.innerText = translator_strings[translation_id][lang];
     }
 
-    $('#languageDropdown').html('<img src="./images/flags/'+ lang +'.svg" alt="English" width="20" height="20" />');
+    $('#languageDropdown').html('<img src="./images/flags/'+ lang +'.svg" alt="English" width="16" height="16" /> Language');
 }
 
 /* Translate document on page load */

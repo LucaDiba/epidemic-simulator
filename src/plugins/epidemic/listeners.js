@@ -95,7 +95,10 @@ document.getElementById('control_start').addEventListener('click', function (e) 
     resetChart();
 
     document.getElementById('simulator').style.display = 'block';
-    location.hash = "#simulator";
+    // location.hash = "#simulator";
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#simulator").offset().top
+    }, 1000);
 
     startSimulation();
     updateChart();
