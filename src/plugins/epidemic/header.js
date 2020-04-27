@@ -111,6 +111,7 @@ var statistics = {
     set currentCured(value) {
         this._currentCured = value;
         counters.immune.innerHTML = this._currentCured;
+        counters.healthy.innerHTML = this.currentHealthy;
     },
 
     /* Current deaths */
@@ -120,6 +121,7 @@ var statistics = {
     set currentDead(value) {
         this._currentDead = value;
         counters.dead.innerHTML = this._currentDead;
+        counters.healthy.innerHTML = this.currentHealthy;
     },
 
     /* Current deaths because of lack of intensive care beds */
